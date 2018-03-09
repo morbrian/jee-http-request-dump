@@ -17,9 +17,11 @@
     <version.maven.checkstyle.plugin>3.0.0</version.maven.checkstyle.plugin>
     <version.maven.enunciate.plugin>2.1.1</version.maven.enunciate.plugin>
     <version.maven.dependency.plugin>2.10</version.maven.dependency.plugin>
-    <version.jackson>2.6.4</version.jackson>
+    <version.maven.owasp.plugin>3.1.1</version.maven.owasp.plugin>
+    <version.maven.pmd.plugin>3.9.0</version.maven.pmd.plugin>
+    <version.jackson>2.9.4</version.jackson>
     <version.javaee>7.0</version.javaee>
-    <version.slf4j>1.7.12</version.slf4j>
+    <version.slf4j>1.7.25</version.slf4j>
     <version.junit>5.1.0</version.junit>
   </properties>
 
@@ -68,11 +70,6 @@
           <configuration>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${version.maven.checkstyle.plugin}</version>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -92,6 +89,33 @@
         </reportSets>
         <configuration>
           <configLocation>google_checks.xml</configLocation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>${version.maven.owasp.plugin}</version>
+        <configuration>
+          <skipProvidedScope>true</skipProvidedScope>
+          <skipRuntimeScope>true</skipRuntimeScope>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${version.maven.pmd.plugin}</version>
+        <configuration>
+          <linkXref>true</linkXref>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <minimumTokens>100</minimumTokens>
+          <targetJdk>${version.java}</targetJdk>
         </configuration>
       </plugin>
     </plugins>
