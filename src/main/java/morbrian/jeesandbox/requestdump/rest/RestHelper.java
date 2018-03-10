@@ -12,6 +12,7 @@ public class RestHelper {
 
   /**
    * Adds tag and user name as response data for arbitrary testing.
+   *
    * @param tag arbitrary string
    * @param principal principal object
    * @return response with provided data, including user name if available in principal

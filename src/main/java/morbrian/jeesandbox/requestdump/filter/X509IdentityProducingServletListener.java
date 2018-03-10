@@ -1,5 +1,8 @@
 package morbrian.jeesandbox.requestdump.filter;
 
+import morbrian.jeesandbox.requestdump.x509.X509Exception;
+import morbrian.jeesandbox.requestdump.x509.X509Extraction;
+
 import javax.enterprise.inject.Produces;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
@@ -27,8 +30,10 @@ public class X509IdentityProducingServletListener implements ServletRequestListe
   }
 
   @Produces
-  private X509Identity obtainX509Identity() {
-    return X509Extraction.extractX509IdentityFromRequest(obtainHttp());
+  private X509Identity obtainX509Identity() throws X509Exception {
+    return new X509Identity(X509Extraction.extractPrimarySubjectDnFromCert(X509Extraction
+        .extractPrimaryCertFromChain(
+            X509Extraction.extractCertChainFromRequestAttribute(obtainHttp()))));
   }
 }
 
